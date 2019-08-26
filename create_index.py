@@ -39,8 +39,9 @@ pattern = re.compile("[^a-zA-Z]")
 
 
 # arguments = sys.argv
-# wikipedia_dump = arguments[0]
-wikipedia_dump = "/home/vatsal/Documents/IIIT/Sem-3/IRE/wikipedia/wiki.xml"
+wikipedia_dump = sys.argv[1]
+index_path = sys.argv[2]
+# wikipedia_dump = "/home/vatsal/Documents/IIIT/Sem-3/IRE/wikipedia/wiki.xml"
 content = et.iterparse(wikipedia_dump, events=("start", "end"))
 content = iter(content)
 # document_title = open("index/document_title.pickle", "wb")
@@ -180,7 +181,7 @@ for event,context in content:
 # In[ ]:
 
 
-filename = "index/title.txt"
+filename = index_path+"/title.txt"
 title_file = open(filename, "w+")
 pointer = 0
 for word in sorted(title_inverted_index) :
@@ -196,7 +197,7 @@ title_file.close()
 # In[ ]:
 
 
-filename = "index/category.txt"
+filename = index_path+"/category.txt"
 category_file = open(filename, "w+")
 pointer = 0
 for word in sorted(category_inverted_index) :
@@ -213,7 +214,7 @@ category_file.close()
 # In[ ]:
 
 
-filename = "index/infobox.txt"
+filename = index_path+"/infobox.txt"
 infobox_file = open(filename, "w+")
 pointer = 0
 for word in sorted(infobox_inverted_index) :
@@ -230,7 +231,7 @@ infobox_file.close()
 # In[ ]:
 
 
-filename = "index/body_text.txt"
+filename = index_path+"/body_text.txt"
 body_text_file = open(filename, "w+")
 pointer = 0
 for word in sorted(body_inverted_index) :
@@ -247,7 +248,7 @@ body_text_file.close()
 # In[ ]:
 
 
-file = open("index/title_doc_no.pickle", "wb")
+file = open(index_path+"/title_doc_no.pickle", "wb")
 pickle.dump(document_title, file)
 file.close()
 
@@ -255,7 +256,7 @@ file.close()
 # In[ ]:
 
 
-file = open("index/word_position.pickle", "wb")
+file = open(index_path+"/word_position.pickle", "wb")
 pickle.dump(document_word, file)
 file.close()
 
