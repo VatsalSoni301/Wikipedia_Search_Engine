@@ -72,7 +72,24 @@ start = time.time()
 
 
 # In[ ]:
+def write_into_file(filename,inverted_object,flag):
+    global document_word
+    fileptr = open(filename, "w+")
+    pointer = 0
+    for word in inverted_object:
+        posting_list = ",".join(inverted_object[word])
+        posting_list = posting_list + "\n"
+        if word not in document_word:
+            document_word[word] = {}
+        document_word[word][flag] = pointer
+        fileptr.write(posting_list)
+        pointer += len(posting_list)
+    fileptr.close()
 
+def write_pickle_file(filename, pickleobj):
+    file = open(filename, "wb")
+    pickle.dump(pickleobj, file)
+    file.close()
 
 for event,context in content:
     tag = re.sub(r"{.*}", "", context.tag)
@@ -191,91 +208,24 @@ for event,context in content:
 
 
 # In[ ]:
+filename = "index/title.txt"
+write_into_file(filename,title_inverted_index,'t')
+filename = "index/category.txt"
+write_into_file(filename,category_inverted_index,'c')
+filename = "index/infobox.txt"
+write_into_file(filename,infobox_inverted_index,'i')
+filename = "index/body_text.txt"
+write_into_file(filename,body_inverted_index,'b')
 
-
-filename = index_path+"/title.txt"
-title_file = open(filename, "w+")
-pointer = 0
-for word in sorted(title_inverted_index) :
-    posting_list = ",".join(title_inverted_index[word])
-    posting_list = posting_list + "\n"
-    document_word[word] = {}
-    document_word[word]['t'] = pointer
-    title_file.write(posting_list)
-    pointer += len(posting_list)
-title_file.close()
-
-
-# In[ ]:
-
-
-filename = index_path+"/category.txt"
-category_file = open(filename, "w+")
-pointer = 0
-for word in sorted(category_inverted_index) :
-    posting_list = ",".join(category_inverted_index[word])
-    posting_list = posting_list + "\n"
-    if word not in document_word:
-        document_word[word] = {}
-    document_word[word]['c'] = pointer
-    category_file.write(posting_list)
-    pointer += len(posting_list)
-category_file.close()
-
-
-# In[ ]:
-
-
-filename = index_path+"/infobox.txt"
-infobox_file = open(filename, "w+")
-pointer = 0
-for word in sorted(infobox_inverted_index) :
-    posting_list = ",".join(infobox_inverted_index[word])
-    posting_list = posting_list + "\n"
-    if word not in document_word:
-        document_word[word] = {}
-    document_word[word]['i'] = pointer
-    infobox_file.write(posting_list)
-    pointer += len(posting_list)
-infobox_file.close()
-
-
-# In[ ]:
-
-
-filename = index_path+"/body_text.txt"
-body_text_file = open(filename, "w+")
-pointer = 0
-for word in sorted(body_inverted_index) :
-    posting_list = ",".join(body_inverted_index[word])
-    posting_list = posting_list + "\n"
-    if word not in document_word:
-        document_word[word] = {}
-    document_word[word]['b'] = pointer
-    body_text_file.write(posting_list)
-    pointer += len(posting_list)
-body_text_file.close()
-
-
-# In[ ]:
-
-
-file = open(index_path+"/title_doc_no.pickle", "wb")
-pickle.dump(document_title, file)
-file.close()
-
-
-# In[ ]:
-
-
-file = open(index_path+"/word_position.pickle", "wb")
-pickle.dump(document_word, file)
-file.close()
+filename = "index/word_position.pickle"
+write_pickle_file(filename, document_word)
+filename = "index/title_doc_no.pickle"
+write_pickle_file(filename, document_title)
 
 
 # In[ ]:
 
 
 end = time.time()
-print("Time Taken :- ",(end-start))
+# print("Time Taken :- ",(end-start))
 
