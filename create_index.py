@@ -208,18 +208,18 @@ for event,context in content:
 
 
 # In[ ]:
-filename = "index/title.txt"
+filename = index_path+"/title.txt"
 write_into_file(filename,title_inverted_index,'t')
-filename = "index/category.txt"
+filename = index_path+"/category.txt"
 write_into_file(filename,category_inverted_index,'c')
-filename = "index/infobox.txt"
+filename = index_path+"/infobox.txt"
 write_into_file(filename,infobox_inverted_index,'i')
-filename = "index/body_text.txt"
+filename = index_path+"/body_text.txt"
 write_into_file(filename,body_inverted_index,'b')
 
-filename = "index/word_position.pickle"
+filename = index_path+"/word_position.pickle"
 write_pickle_file(filename, document_word)
-filename = "index/title_doc_no.pickle"
+filename = index_path+"/title_doc_no.pickle"
 write_pickle_file(filename, document_title)
 
 
