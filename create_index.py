@@ -32,7 +32,9 @@ for word in words:
 # In[ ]:
 
 
-pattern = re.compile("[^a-zA-Z]")
+pattern = re.compile("[^a-zA-Z0-9]")
+cssExp = re.compile(r'{\|(.*?)\|}',re.DOTALL)
+linkExp = re.compile(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+',re.DOTALL)
 
 
 # In[ ]:
@@ -87,6 +89,8 @@ for event,context in content:
                 for word in words:
 #                     word=word.strip()
                     word = stemmer.stem(word)
+                    if len(word) <= 2:
+                    	continue
                     if word and word not in stop_words:
                         if word not in title_freq:
                             title_freq[word] = 1
@@ -97,8 +101,10 @@ for event,context in content:
         
         elif tag == "text":
             
+            body_text = context.text
+            body_text = linkExp.sub('',str(body_text))
+            body_text = cssExp.sub('',str(body_text))
             try:
-                body_text = context.text
                 category_words = re.findall("\[\[Category:(.*?)\]\]", body_text);
                 if category_words != "":
                     for category_word in category_words:
@@ -106,6 +112,8 @@ for event,context in content:
                         for word in words:
 #                             word=word.strip()
                             word = stemmer.stem(word.lower())
+                            if len(word) <= 2:
+                                continue
                             if  word and word not in stop_words:
                                 if word not in category_freq:
                                     category_freq[word] = 1
@@ -124,6 +132,8 @@ for event,context in content:
                             for word in words:
 #                                 word=word.strip()
                                 word = stemmer.stem(word.lower())
+                                if len(word) <= 2:
+                                	continue
                                 if word and word not in stop_words:
                                     if word not in infobox_freq:
                                         infobox_freq[word] = 1
@@ -137,6 +147,8 @@ for event,context in content:
 
                 for word in words:
                     word = stemmer.stem(word.lower())
+                    if len(word) <= 2:
+                    	continue
                     if word and word not in stop_words:
                         if word not in body_freq:
                             body_freq[word] = 1

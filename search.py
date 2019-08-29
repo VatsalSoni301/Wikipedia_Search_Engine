@@ -55,10 +55,9 @@ def search(path_to_index, queries):
         if ":" in query:
             tmp_result = []
             flag = 0
-            query_fields = query.split(",")
+            query_fields = query.split(" ")
             for queries in query_fields:
                 field,query = queries.split(":")
-                field = field.strip()
                 if field == "ref" or field == "ext" or field == "body":
                     field = "b"
                 elif field == "title":
@@ -67,7 +66,6 @@ def search(path_to_index, queries):
                     field = "c"
                 elif field == "infobox":
                     field = "i"
-                words = query.split(" ")
                 for word in words:
                     word = word.strip()
                     word = stemmer.stem(word)
@@ -121,7 +119,10 @@ def search(path_to_index, queries):
             query_result = []
         else:
             query_result = set(query_result)
+            query_result = list(query_result)
 
+        if len(query_result) > 10:
+        	query_result = query_result[0:10]
         final_query_result.append(query_result)
 
     return final_query_result
