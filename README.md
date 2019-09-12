@@ -2,13 +2,15 @@
 
 # Description
 
-* Implemented a search engine on the wikipedia dump of size 73.4 GB. In order to retrieve result faster indexing and ranking is implemented to get most relevant result. Relevance ranking algorithm is implemented using TF-IDF score to rank documents. Creating index takes around 14 hr on a given wikipedia dump. Result is retrieved in less than 1 second.
+* Implemented a search engine on the wikipedia dump of size 73.4 GB. In order to retrieve result faster and relevant, indexing and ranking is implemented. Relevance ranking algorithm is implemented using TF-IDF score to rank documents. Creating index takes around 14 hr on a given wikipedia dump. Result is retrieved in less than 1 second.
 
-# prerequisites
+# Prerequisites
 
 * python3
 * For preprocessing and Stemming, I have used nltk library.
 * To install nltk `pip3 install nltk`
+* Install etree to parse wikipedia dump xml file
+* To install etree `pip3 install elementpath`
 * stop_words.txt file must be present in the same directory to remove stop words
 
 # To run the project 
@@ -26,3 +28,4 @@
 * It supports two types of query.
 * Normal query e.g. `new york` , `gandhi` , `1981 world cup`
 * Field query e.g. `title:gandhi body:arjun infobox:gandhi category:gandhi ref:gandhi`
+* Top 10 results will be printed.
